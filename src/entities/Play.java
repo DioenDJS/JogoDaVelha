@@ -83,8 +83,6 @@ public class Play {
          ){
              return sinal;
          }
-//         String twoLine = tabuleiro[0][0]+ ","+ tabuleiro[0][1] + ", "+ tabuleiro[0][2];
-//         String treeLine = tabuleiro[0][0]+ ","+ tabuleiro[0][1] + ", "+ tabuleiro[0][2];
         return "";
     }
 }
