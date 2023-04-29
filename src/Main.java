@@ -54,7 +54,7 @@ public class Main {
             System.out.print("Jogador " + (vezDoJogador+1) + "º "+ playerList.get(vezDoJogador).getName() + " escolha uma posição de 1 a 9 : ");
             String escolha = input.nextLine();
 
-            boolean next = play.geMove(escolha, playerList.get(vezDoJogador).getSimbolo());
+            boolean next = play.getMove(escolha, playerList.get(vezDoJogador).getSimbolo());
 
             if(next == false){
                 i--;

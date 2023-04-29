@@ -32,7 +32,7 @@ public class Play {
         setTabuleiro(this.tabuleiro);
     }
 
-    public Boolean geMove(String escolha, String sinal){
+    public Boolean getMove(String escolha, String sinal){
         boolean jogadaFeita;
         String position = PositionEnum.getDescricao(escolha);
 
