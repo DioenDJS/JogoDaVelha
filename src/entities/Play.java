@@ -34,6 +34,11 @@ public class Play {
         boolean jogadaFeita;
         String position = PositionEnum.getDescricao(escolha);
 
+        if(position == null){
+            System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
+            return false;
+        }
+
         String[] positions = position.split(",");
 
         String value = tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
