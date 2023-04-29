@@ -1,3 +1,4 @@
+import utils.ConsoleColors;
 import entities.Play;
 import entities.Player;
 import entities.enums.PositionEnum;
@@ -17,20 +18,22 @@ public class Main {
 
         Play play = new Play();
 
+        String colorPlayer;
         int jogadas = 9;
 
         while (playerList.size() < 2){
             try {
-                System.out.print("Player " + (playerList.size() + 1) + " digite seu nick name: ");
+                colorPlayer = playerList.size() == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+                System.out.print("Player " + colorPlayer + (playerList.size() + 1) + ConsoleColors.RESET + " digite seu nick name: ");
                 String name = input.nextLine();
 
                 String simbolo;
 
                 if(playerList.size() <= 0) {
-                    System.out.print("Player " + (playerList.size() + 1) + " escolha o sinal \"X\" ou \"O\" : ");
+                    System.out.print("Player " + ConsoleColors.PURPLE + (playerList.size() + 1) + ConsoleColors.RESET + " escolha o sinal \"X\" ou \"O\" : ");
                     simbolo = input.nextLine();
                     if(!simbolo.equals("X") && !simbolo.equals("O")){
-                        System.out.println("Voce digitou um valor invalido!");
+                        System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
                         continue;
                     }
                 }else{
@@ -51,7 +54,8 @@ public class Main {
 
             int vezDoJogador = (i+1)%2 == 0 ? 1 : 0;
 
-            System.out.print("Jogador " + (vezDoJogador+1) + "º "+ playerList.get(vezDoJogador).getName() + " escolha uma posição de 1 a 9 : ");
+            colorPlayer = vezDoJogador == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+            System.out.print("Jogador " + colorPlayer +(vezDoJogador+1) + "º "+ playerList.get(vezDoJogador).getName() + ConsoleColors.RESET +" escolha uma posição de 1 a 9 : ");
             String escolha = input.nextLine();
 
             boolean next = play.getMove(escolha, playerList.get(vezDoJogador).getSimbolo());
@@ -65,8 +69,9 @@ public class Main {
             String simboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
 
             if(simboloDoVencedor.equals("X") || simboloDoVencedor.equals("O")){
-                String nome = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? playerList.get(0).getName() : playerList.get(1).getName();
-                System.out.println("Jogador " + nome + " venceu!");
+                Player playerWinner = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? playerList.get(0): playerList.get(1);
+                colorPlayer = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+                System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
                 break;
             }
             if(i == 8){

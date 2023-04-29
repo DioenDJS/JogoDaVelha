@@ -1,9 +1,7 @@
 package entities;
 
 import entities.enums.PositionEnum;
-
-import java.sql.SQLOutput;
-import java.util.Arrays;
+import utils.ConsoleColors;
 
 public class Play {
 
@@ -41,7 +39,7 @@ public class Play {
         String value = tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
 
         if(value.equals("X") || value.equals("O")){
-            System.out.println("Este campo esta prenchido!");
+            System.out.println("Este "+ ConsoleColors.RED + "campo "+ ConsoleColors.RESET +"esta "+ ConsoleColors.RED + "prenchido" + ConsoleColors.RESET + "! ");
             return false;
         }else {
             this.tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])] = sinal;
