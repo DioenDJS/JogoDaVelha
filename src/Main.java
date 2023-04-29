@@ -1,7 +1,6 @@
 import utils.ConsoleColors;
 import entities.Play;
 import entities.Player;
-import entities.enums.PositionEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,11 +73,10 @@ public class Main {
                 System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
                 break;
             }
+
             if(i == 8){
                 System.out.println(ConsoleColors.YELLOW +"Deu velha!"+ ConsoleColors.RESET);
+            }
         }
     }
-
-
-
 }
