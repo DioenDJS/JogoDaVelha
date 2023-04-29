@@ -69,21 +69,9 @@ public class Main {
                 System.out.println("Jogador " + nome + " venceu!");
                 break;
             }
+            if(i == 8){
+                System.out.println(ConsoleColors.YELLOW +"Deu velha!"+ ConsoleColors.RESET);
         }
-        /*
-        play.getInitTabuleiro();
-
-        String[][] tabuleiro = play.getTabuleiro();
-
-        System.out.println(play.getToString());
-        play.geMove("0,1", "X");
-        System.out.println(play.getToString());
-
-        tabuleiro[2][0] = "O";
-        play.setTabuleiro(tabuleiro);
-        System.out.println(play.getToString());
-        */
-
     }
 
 
