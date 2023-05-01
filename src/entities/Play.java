@@ -7,9 +7,12 @@ public class Play {
 
     private String[][] tabuleiro;
 
+    private Scoreboard scoreboard;
+
     public Play(){
 
         tabuleiro = new String[3][3];
+        scoreboard = new Scoreboard(0,0);
     }
 
     public String[][] getTabuleiro() {
@@ -20,8 +23,18 @@ public class Play {
         this.tabuleiro = tabuleiro;
     }
 
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+    public void setScoreboard(Scoreboard scoreboard) {
+        this.scoreboard = scoreboard;
+    }
+
     public void getInitTabuleiro(){
         int layoutNumericoTabuleiro = 1;
+        System.out.println(scoreboard.toString() + "\n");
+        this.scoreboard.toString();
         for (int i = 0; i < this.tabuleiro.length; i++) {
             for (int j = 0; j < this.tabuleiro[i].length; j++) {
                     tabuleiro[i][j] = String.valueOf(layoutNumericoTabuleiro++);
@@ -69,6 +82,7 @@ public class Play {
     }
 
     public StringBuilder getViewPalyerWinner(String[] positionWinner) {
+        System.out.println(scoreboard.toString() + "\n");
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < this.tabuleiro[i].length; j++) {

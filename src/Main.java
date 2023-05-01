@@ -1,3 +1,4 @@
+import entities.Scoreboard;
 import utils.ConsoleColors;
 import entities.Play;
 import entities.Player;
@@ -84,9 +85,17 @@ public class Main {
                     colorPlayer = playerList.get(0).getSimbolo().equals(simboloDoVencedor[3]) ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
                     System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
                     String[] positionWinnewr = {simboloDoVencedor[0], simboloDoVencedor[1], simboloDoVencedor[2] };
+
+                    if(playerList.get(0).getSimbolo().equals(simboloDoVencedor[3])){
+                        play.setScoreboard(new Scoreboard(play.getScoreboard().getPlayerOne() + 1,play.getScoreboard().getPlayerTwo()));
+                    }else{
+                        play.setScoreboard(new Scoreboard(play.getScoreboard().getPlayerOne() ,play.getScoreboard().getPlayerTwo()+1));
+                    }
+
                     System.out.println(play.getViewPalyerWinner(positionWinnewr));
                     break;
                 }
+
             }
 
             char letter;
@@ -108,4 +117,5 @@ public class Main {
             }
         }while (replayGame);
     }
+
 }
