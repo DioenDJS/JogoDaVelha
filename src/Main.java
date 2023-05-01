@@ -18,6 +18,7 @@ public class Main {
         Play play = new Play();
 
         String colorPlayer;
+
         int jogadas = 9;
 
         while (playerList.size() < 2){
@@ -67,20 +68,26 @@ public class Main {
                 }
                 System.out.println(play.getToString());
 
-                String simboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
+                String returnSimboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
 
-                if (simboloDoVencedor.equals("X") || simboloDoVencedor.equals("O")) {
-                    Player playerWinner = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? playerList.get(0) : playerList.get(1);
-                    colorPlayer = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
-                    System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
+                String[] simboloDoVencedor = returnSimboloDoVencedor.split(",");
+
+                if(returnSimboloDoVencedor.equals("")&& i < 8){
+                    continue;
+                }if(returnSimboloDoVencedor.equals("") && i == 8){
+
+                    System.out.println(ConsoleColors.YELLOW + "Deu velha!" + ConsoleColors.RESET);
                     break;
                 }
-
-                if (i == 8) {
-                    System.out.println(ConsoleColors.YELLOW + "Deu velha!" + ConsoleColors.RESET);
+                else if (simboloDoVencedor[3].equals("X") || simboloDoVencedor[3].equals("O")) {
+                    Player playerWinner = playerList.get(0).getSimbolo().equals(simboloDoVencedor[3]) ? playerList.get(0) : playerList.get(1);
+                    colorPlayer = playerList.get(0).getSimbolo().equals(simboloDoVencedor[3]) ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+                    System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
+                    String[] positionWinnewr = {simboloDoVencedor[0], simboloDoVencedor[1], simboloDoVencedor[2] };
+                    System.out.println(play.getViewPalyerWinner(positionWinnewr));
+                    break;
                 }
             }
-
 
             char letter;
             do {
