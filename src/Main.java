@@ -45,38 +45,60 @@ public class Main {
             }
         }
 
-        play.getInitTabuleiro();
+        boolean replayGame;
+        do {
+            play.getInitTabuleiro();
 
-        System.out.println(play.getToString());
-
-        for (int i = 0; i < jogadas; i++) {
-
-            int vezDoJogador = (i+1)%2 == 0 ? 1 : 0;
-
-            colorPlayer = vezDoJogador == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
-            System.out.print("Jogador " + colorPlayer +(vezDoJogador+1) + "º "+ playerList.get(vezDoJogador).getName() + ConsoleColors.RESET +" escolha uma posição de 1 a 9 : ");
-            String escolha = input.nextLine();
-
-            boolean next = play.getMove(escolha, playerList.get(vezDoJogador).getSimbolo());
-
-            if(next == false){
-                i--;
-                continue;
-            }
             System.out.println(play.getToString());
 
-            String simboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
+            for (int i = 0; i < jogadas; i++) {
 
-            if(simboloDoVencedor.equals("X") || simboloDoVencedor.equals("O")){
-                Player playerWinner = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? playerList.get(0): playerList.get(1);
-                colorPlayer = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
-                System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
-                break;
+                int vezDoJogador = (i + 1) % 2 == 0 ? 1 : 0;
+
+                colorPlayer = vezDoJogador == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+                System.out.print("Jogador " + colorPlayer + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : ");
+                String escolha = input.nextLine();
+
+                boolean next = play.getMove(escolha, playerList.get(vezDoJogador).getSimbolo());
+
+                if (next == false) {
+                    i--;
+                    continue;
+                }
+                System.out.println(play.getToString());
+
+                String simboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
+
+                if (simboloDoVencedor.equals("X") || simboloDoVencedor.equals("O")) {
+                    Player playerWinner = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? playerList.get(0) : playerList.get(1);
+                    colorPlayer = playerList.get(0).getSimbolo().equals(simboloDoVencedor) ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+                    System.out.println("Jogador " + colorPlayer + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
+                    break;
+                }
+
+                if (i == 8) {
+                    System.out.println(ConsoleColors.YELLOW + "Deu velha!" + ConsoleColors.RESET);
+                }
             }
 
-            if(i == 8){
-                System.out.println(ConsoleColors.YELLOW +"Deu velha!"+ ConsoleColors.RESET);
+
+            char letter;
+            do {
+                System.out.print("Desejam jogar novamente digite (S) - Sim ou (N) - Não : ");
+                letter = input.next().charAt(0);
+                input.nextLine();
+
+                if(!(letter == 'S' || letter == 's' || letter == 'N' || letter == 'n')){
+                    System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
+                    letter = ' ';
+                }
+            }while(letter == ' ');
+
+            if (letter == 'S' || letter == 's') {
+                replayGame = true;
+            } else{
+                replayGame = false;
             }
-        }
+        }while (replayGame);
     }
 }
