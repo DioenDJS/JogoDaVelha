@@ -85,9 +85,9 @@ public class Main {
                     String[] positionWinnewr = {simboloDoVencedor[0], simboloDoVencedor[1], simboloDoVencedor[2] };
 
                     if(playerList.get(0).getSimbolo().equals(simboloDoVencedor[3])){
-                        play.setScoreboard(new Scoreboard(play.getScoreboard().getPlayerOne() + 1,play.getScoreboard().getPlayerTwo()));
+                        play.getScoreboard().setPlayerOne(play.getScoreboard().getPlayerOne() + 1);
                     }else{
-                        play.setScoreboard(new Scoreboard(play.getScoreboard().getPlayerOne() ,play.getScoreboard().getPlayerTwo()+1));
+                        play.getScoreboard().setPlayerTwo(play.getScoreboard().getPlayerTwo() + 1);
                     }
 
                     System.out.println(play.getViewPalyerWinner(positionWinnewr));
