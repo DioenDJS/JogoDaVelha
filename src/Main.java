@@ -12,8 +12,6 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        Player player = new Player();
-
         List<Player> playerList = new ArrayList<>();
 
         Play play = new Play();
@@ -41,7 +39,7 @@ public class Main {
                     simbolo = playerList.get(0).getSimbolo().equals("X") ? "O" : "X";
 
                 }
-                playerList.add(player = new Player(name, simbolo));
+                playerList.add(new Player(name, simbolo));
             } catch (NullPointerException e) {
                 System.out.println(e.getMessage());
             }
