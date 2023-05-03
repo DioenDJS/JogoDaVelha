@@ -1,3 +1,5 @@
+package service;
+
 import entities.Play;
 import entities.Player;
 import entities.enums.PositionEnum;
@@ -84,4 +86,25 @@ public class PlayService {
             return true;
         }
     }
+
+    public boolean jogarNovamente(Scanner input){
+        char letter;
+        do {
+            System.out.print("Desejam jogar novamente digite (S) - Sim ou (N) - Não : ");
+            letter = input.next().charAt(0);
+            input.nextLine();
+
+            if(!(letter == 'S' || letter == 's' || letter == 'N' || letter == 'n')){
+                System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
+                letter = ' ';
+            }
+        }while(letter == ' ');
+
+        if (letter == 'S' || letter == 's') {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 }
