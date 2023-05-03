@@ -62,4 +62,26 @@ public class PlayService {
         }while (replayGame);
     }
 
+    public Boolean getMove(Play play, String escolha, String sinal){
+        boolean jogadaFeita;
+        String position = PositionEnum.getDescricao(escolha);
+
+        if(position == null){
+            System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
+            return false;
+        }
+
+        String[] positions = position.split(",");
+
+        String value = play.getTabuleiro()[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
+
+        if(value.equals("X") || value.equals("O")){
+            System.out.println("Este "+ ConsoleColors.RED + "campo "+ ConsoleColors.RESET +"esta "+ ConsoleColors.RED + "prenchido" + ConsoleColors.RESET + "! ");
+            return false;
+        }else {
+            play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
+            play.getTabuleiro();
+            return true;
+        }
+    }
 }
