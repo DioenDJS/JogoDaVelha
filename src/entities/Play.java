@@ -27,8 +27,9 @@ public class Play {
         return scoreboard;
     }
 
-    public void setScoreboard(Scoreboard scoreboard) {
-        this.scoreboard = scoreboard;
+    public void setValueBoard(int positionsI, int positionsJ, String sinal){
+        this.tabuleiro[positionsI][positionsJ] = sinal;
+        setTabuleiro(this.tabuleiro);
     }
 
     public void getInitTabuleiro(){
