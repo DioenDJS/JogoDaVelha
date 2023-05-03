@@ -42,32 +42,6 @@ public class Play {
         setTabuleiro(this.tabuleiro);
     }
 
-    public Boolean getMove(String escolha, String sinal){
-        boolean jogadaFeita;
-        String position = PositionEnum.getDescricao(escolha);
-
-        if(position == null){
-            System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
-            return false;
-        }
-
-        String[] positions = position.split(",");
-
-        String value = tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
-
-        if(value.equals("X") || value.equals("O")){
-            System.out.println("Este "+ ConsoleColors.RED + "campo "+ ConsoleColors.RESET +"esta "+ ConsoleColors.RED + "prenchido" + ConsoleColors.RESET + "! ");
-            return false;
-        }else {
-            this.tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])] = sinal;
-
-            setTabuleiro(this.tabuleiro);
-
-
-            this.getTabuleiro();
-            return true;
-        }
-    }
 
     public StringBuilder getToString() {
         StringBuilder s = new StringBuilder();
