@@ -19,9 +19,7 @@ public class Play {
         return tabuleiro;
     }
 
-    public void setTabuleiro(String[][] tabuleiro) {
-        this.tabuleiro = tabuleiro;
-    }
+    private void setTabuleiro(String[][] tabuleiro) { this.tabuleiro = tabuleiro; }
 
     public Scoreboard getScoreboard() {
         return scoreboard;
