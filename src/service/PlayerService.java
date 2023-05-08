@@ -10,6 +10,17 @@ public class PlayerService {
 
     public List<Player> criandoJogadores(List<Player> playerList, Scanner input){
 
+        System.out.println(" --------- Escolha ---------- ");
+        System.out.println("| 1 - Player 1º vs   CPU     | ");
+        System.out.println("| 2 - Player 1º vs Player 2º | ");
+        System.out.println(" ---------------------------- ");
+        int switchPlay = input.nextInt();
+
+        boolean cpu = switchPlay == 1 ? true : false ;
+
+        return cadastraJogadores(playerList, input, cpu);
+
+    }
         String colorPlayer;
 
         while (playerList.size() < 2){
