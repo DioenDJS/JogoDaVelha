@@ -21,33 +21,45 @@ public class PlayerService {
         return cadastraJogadores(playerList, input, cpu);
 
     }
+
+    private List<Player> cadastraJogadores(List<Player> playerList, Scanner input, boolean cpu){
         String colorPlayer;
+        String simbolo;
+        String name;
 
-        while (playerList.size() < 2){
             try {
-                colorPlayer = playerList.size() == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
-                System.out.print("Player " + colorPlayer + (playerList.size() + 1) + ConsoleColors.RESET + " digite seu nick name: ");
-                String name = input.nextLine();
+                while (playerList.size() < 2) {
 
-                String simbolo;
-
-                if(playerList.size() <= 0) {
-                    System.out.print("Player " + ConsoleColors.PURPLE + (playerList.size() + 1) + ConsoleColors.RESET + " escolha o sinal \"X\" ou \"O\" : ");
-                    simbolo = input.nextLine();
-                    if(!simbolo.equals("X") && !simbolo.equals("O")){
-                        System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
-                        continue;
+                    if (playerList.size() >= 1 && cpu == true) {
+                        name = "CPU";
+                        colorPlayer = ConsoleColors.CYAN;
+                    } else {
+                        input.nextLine();
+                        colorPlayer = playerList.size() == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
+                        System.out.print("Player " + colorPlayer + (playerList.size() + 1) + ConsoleColors.RESET + " digite seu nick name: ");
+                        name = input.nextLine();
                     }
-                }else{
-                    simbolo = playerList.get(0).getSimbolo().equals("X") ? "O" : "X";
 
+                    if (playerList.size() <= 0) {
+                        System.out.print("Player " + ConsoleColors.PURPLE + (playerList.size() + 1) + ConsoleColors.RESET + " escolha o sinal \"X\" ou \"O\" : ");
+                        simbolo = input.nextLine();
+                        if (!simbolo.equals("X") && !simbolo.equals("O")) {
+                            System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido" + ConsoleColors.RESET + "!");
+                            continue;
+                        }
+                    } else {
+                        simbolo = playerList.get(0).getSimbolo().equals("X") ? "O" : "X";
+
+                    }
+
+                    playerList.add(new Player(name, simbolo, colorPlayer));
                 }
-                playerList.add(new Player(name, simbolo, colorPlayer));
+                return playerList;
+
             } catch (NullPointerException e) {
                 System.out.println(e.getMessage());
+                throw new RuntimeException(e.getMessage());
             }
-        }
 
-        return playerList;
     }
 }
