@@ -6,6 +6,7 @@ import entities.enums.PositionEnum;
 import utils.ConsoleColors;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class PlayService {
@@ -22,10 +23,22 @@ public class PlayService {
 
                 int vezDoJogador = (i + 1) % 2 == 0 ? 1 : 0;
 
-                System.out.print("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : ");
-                String escolha = input.nextLine();
+                String escolha;
 
-                if(!getMove(play, escolha, playerList.get(vezDoJogador).getSimbolo())) {
+                boolean cpu = playerList.get(vezDoJogador).getName().equals("CPU") ? true : false ;
+                if(!cpu) {
+                    System.out.print("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : ");
+                    escolha = input.nextLine();
+                }else{
+                    Random numberRandom = new Random();
+                    int escolhaIntn = numberRandom.nextInt(10);
+                    System.out.println("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : " + escolhaIntn);
+                    escolha = String.valueOf(escolhaIntn);
+                }
+
+
+
+                if(!getMove(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
                     i--;
                     continue;
                 }
@@ -64,8 +77,9 @@ public class PlayService {
         }while (replayGame);
     }
 
-    public Boolean getMove(Play play, String escolha, String sinal){
+    public Boolean getMove(Play play, String escolha, String sinal, boolean cpu){
         boolean jogadaFeita;
+
         String position = PositionEnum.getDescricao(escolha);
 
         if(position == null){
@@ -77,7 +91,9 @@ public class PlayService {
 
         String value = play.getTabuleiro()[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
 
-        if(value.equals("X") || value.equals("O")){
+        if((value.equals("X") || value.equals("O")) && cpu == true){
+            return false;
+        }else if((value.equals("X") || value.equals("O")) && cpu == false){
             System.out.println("Este "+ ConsoleColors.RED + "campo "+ ConsoleColors.RESET +"esta "+ ConsoleColors.RED + "prenchido" + ConsoleColors.RESET + "! ");
             return false;
         }else {
