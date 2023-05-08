@@ -22,8 +22,20 @@ public class PlayService {
 
                 int vezDoJogador = (i + 1) % 2 == 0 ? 1 : 0;
 
-                System.out.print("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : ");
-                String escolha = input.nextLine();
+                String escolha;
+
+                boolean cpu = playerList.get(vezDoJogador).getName().equals("CPU") ? true : false ;
+                if(!cpu) {
+                    System.out.print("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : ");
+                    escolha = input.nextLine();
+                }else{
+                    Random numberRandom = new Random();
+                    int escolhaIntn = numberRandom.nextInt(10);
+                    System.out.println("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : " + escolhaIntn);
+                    escolha = String.valueOf(escolhaIntn);
+                }
+
+
 
                 if(!getMove(play, escolha, playerList.get(vezDoJogador).getSimbolo())) {
                     i--;
