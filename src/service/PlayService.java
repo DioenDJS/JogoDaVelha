@@ -6,6 +6,7 @@ import entities.enums.PositionEnum;
 import utils.ConsoleColors;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class PlayService {
@@ -37,7 +38,7 @@ public class PlayService {
 
 
 
-                if(!getMove(play, escolha, playerList.get(vezDoJogador).getSimbolo())) {
+                if(!getMove(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
                     i--;
                     continue;
                 }
@@ -76,8 +77,9 @@ public class PlayService {
         }while (replayGame);
     }
 
-    public Boolean getMove(Play play, String escolha, String sinal){
+    public Boolean getMove(Play play, String escolha, String sinal, boolean cpu){
         boolean jogadaFeita;
+
         String position = PositionEnum.getDescricao(escolha);
 
         if(position == null){
@@ -89,7 +91,9 @@ public class PlayService {
 
         String value = play.getTabuleiro()[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
 
-        if(value.equals("X") || value.equals("O")){
+        if((value.equals("X") || value.equals("O")) && cpu == true){
+            return false;
+        }else if((value.equals("X") || value.equals("O")) && cpu == false){
             System.out.println("Este "+ ConsoleColors.RED + "campo "+ ConsoleColors.RESET +"esta "+ ConsoleColors.RED + "prenchido" + ConsoleColors.RESET + "! ");
             return false;
         }else {
