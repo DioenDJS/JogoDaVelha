@@ -34,7 +34,8 @@ public class PlayerService {
                         name = "CPU";
                         colorPlayer = ConsoleColors.CYAN;
                     } else {
-                        input.nextLine();
+                        if(playerList.size() <= 0)
+                            input.nextLine();
                         colorPlayer = playerList.size() == 0 ? ConsoleColors.PURPLE : ConsoleColors.CYAN;
                         System.out.print("Player " + colorPlayer + (playerList.size() + 1) + ConsoleColors.RESET + " digite seu nick name: ");
                         name = input.nextLine();
