@@ -1,6 +1,5 @@
 package entities;
 
-import entities.enums.PositionEnum;
 import utils.ConsoleColors;
 
 public class Play {
