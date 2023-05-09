@@ -38,7 +38,7 @@ public class PlayService {
 
 
 
-                if(!getMove(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
+                if(!jogar(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
                     i--;
                     continue;
                 }
@@ -77,8 +77,7 @@ public class PlayService {
         }while (replayGame);
     }
 
-    public Boolean getMove(Play play, String escolha, String sinal, boolean cpu){
-        boolean jogadaFeita;
+    public Boolean jogar(Play play, String escolha, String sinal, boolean cpu){
 
         String position = PositionEnum.getDescricao(escolha);
 
