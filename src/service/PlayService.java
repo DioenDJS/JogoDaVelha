@@ -3,7 +3,7 @@ package service;
 import entities.Play;
 import entities.Player;
 import entities.enums.PositionEnum;
-import utils.ConsoleColors;
+import utils.Messagens;
 
 import java.util.List;
 import java.util.Random;
@@ -27,12 +27,12 @@ public class PlayService {
 
                 boolean cpu = playerList.get(vezDoJogador).getName().equals("CPU") ? true : false ;
                 if(!cpu) {
-                    System.out.print("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : ");
+                    Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName());
                     escolha = input.nextLine();
                 }else{
                     Random numberRandom = new Random();
                     int escolhaIntn = numberRandom.nextInt(10);
-                    System.out.println("Jogador " + playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1) + "º " + playerList.get(vezDoJogador).getName() + ConsoleColors.RESET + " escolha uma posição de 1 a 9 : " + escolhaIntn);
+                    Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName(), escolhaIntn);
                     escolha = String.valueOf(escolhaIntn);
                 }
 
@@ -52,12 +52,12 @@ public class PlayService {
                 if(returnSimboloDoVencedor.equals("")&& i < 8){
                     continue;
                 }if(returnSimboloDoVencedor.equals("") && i == 8){
-                    System.out.println(ConsoleColors.YELLOW + "Deu velha!" + ConsoleColors.RESET);
+                    Messagens.resultadoDaPartida();
                     break;
                 } else if (simboloDoVencedor[3].equals("X") || simboloDoVencedor[3].equals("O")) {
                     Player playerWinner = playerList.get(0).getSimbolo().equals(simboloDoVencedor[3]) ? playerList.get(0) : playerList.get(1);
 
-                    System.out.println("Jogador " + playerWinner.getColor() + playerWinner.getName() + ConsoleColors.RESET + " venceu!");
+                    Messagens.resultadoDaPartida(playerWinner.getColor(), playerWinner.getName());
                     String[] positionWinnewr = {simboloDoVencedor[0], simboloDoVencedor[1], simboloDoVencedor[2] };
 
                     if(playerList.get(0).getSimbolo().equals(simboloDoVencedor[3])){
@@ -83,7 +83,7 @@ public class PlayService {
         String position = PositionEnum.getDescricao(escolha);
 
         if(position == null){
-            System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
+            Messagens.valorInvalidoDigitado();
             return false;
         }
 
@@ -94,7 +94,7 @@ public class PlayService {
         if((value.equals("X") || value.equals("O")) && cpu == true){
             return false;
         }else if((value.equals("X") || value.equals("O")) && cpu == false){
-            System.out.println("Este "+ ConsoleColors.RED + "campo "+ ConsoleColors.RESET +"esta "+ ConsoleColors.RED + "prenchido" + ConsoleColors.RESET + "! ");
+            Messagens.campoPrenchido();
             return false;
         }else {
             play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
@@ -106,12 +106,12 @@ public class PlayService {
     public boolean jogarNovamente(Scanner input){
         char letter;
         do {
-            System.out.print("Desejam jogar novamente digite (S) - Sim ou (N) - Não : ");
+            Messagens.jogarNovamente();
             letter = input.next().charAt(0);
             input.nextLine();
 
             if(!(letter == 'S' || letter == 's' || letter == 'N' || letter == 'n')){
-                System.out.println("Voce digitou um valor " + ConsoleColors.RED + "invalido"+ ConsoleColors.RESET +"!");
+                Messagens.valorInvalidoDigitado();
                 letter = ' ';
             }
         }while(letter == ' ');
