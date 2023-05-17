@@ -105,4 +105,30 @@ public class Play {
          }
         return "";
     }
+
+    //recebe a posição pra ser checada e o sinal
+    public String cpuChecaPosicaoVitoriaOuDerrota(String positionWinner, String sinal) {
+
+
+        //separa o valor na virgula
+        String[] positions = positionWinner.split(",");
+
+        //preserva o valor que havia na posição a ser checada
+        String guardaValor = tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
+
+        //seta o valor para validar
+        setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
+
+        //checando se o adiversirio vence
+        String existe = getCheck(sinal);
+
+        //retorna valor pra posição
+        setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), guardaValor);
+
+        if(existe.isEmpty()){
+           return "";
+        }
+
+        return positionWinner;
+    }
 }

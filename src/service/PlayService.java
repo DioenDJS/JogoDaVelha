@@ -30,13 +30,15 @@ public class PlayService {
                     Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName());
                     escolha = input.nextLine();
                 }else{
-                    Random numberRandom = new Random();
-                    int escolhaIntn = numberRandom.nextInt(10);
-                    Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName(), escolhaIntn);
-                    escolha = String.valueOf(escolhaIntn);
+                    String descricao = getCheckDois(play, playerList.get(vezDoJogador).getSimbolo());
+
+                    try {
+                        escolha = PositionEnum.getId(descricao);
+                    }catch (RuntimeException e){
+                        throw new NumberFormatException(e.getMessage());
+                    }
+                    Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName(), Integer.parseInt(escolha));
                 }
-
-
 
                 if(!jogar(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
                     i--;
@@ -90,16 +92,23 @@ public class PlayService {
 
         String value = play.getTabuleiro()[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
 
-        if((value.equals("X") || value.equals("O")) && cpu == true){
-            return false;
-        }else if((value.equals("X") || value.equals("O")) && cpu == false){
-            Messagens.campoPrenchido();
+        if(!validandoposicaoNoTabuleiro(value, cpu)){
             return false;
         }else {
             play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
             play.getTabuleiro();
             return true;
         }
+    }
+
+    private boolean validandoposicaoNoTabuleiro(String sinal, boolean cpu){
+        if((sinal.equals("X") || sinal.equals("O")) && cpu == true){
+            return false;
+        }else if((sinal.equals("X") || sinal.equals("O")) && cpu == false) {
+            Messagens.campoPrenchido();
+            return false;
+        }
+        return true;
     }
 
     public boolean jogarNovamente(Scanner input){
@@ -122,4 +131,69 @@ public class PlayService {
         }
     }
 
+    public String getCheckDois(Play play, String sinal) {
+
+        String sinalAdversario = sinal.equals("X") ? "O" : "X";
+
+        String[] posiçõesRestantes = listaPosicoesDoTabuleiro(play, sinal);
+
+        //CPU verifica se esta por uma jogade de ganhar
+        for (int i = 1; i <= 9; i++) {
+            if(posiçõesRestantes[i].equals(" ")){
+                continue;
+            }
+            String e =  play.cpuChecaPosicaoVitoriaOuDerrota(PositionEnum.getDescricao(String.valueOf(i)), sinal);
+            if(!e.isEmpty()){
+                return e;
+            }
+        }
+
+        //CPU verifica se adversario esta por uma jogade de ganhar
+        for (int i = 1; i <= 9; i++) {
+
+            if(posiçõesRestantes[i].equals(" ")){
+                continue;
+            }
+           String e =  play.cpuChecaPosicaoVitoriaOuDerrota(PositionEnum.getDescricao(String.valueOf(i)), sinalAdversario);
+           if(!e.isEmpty()){
+               return e;
+           }
+        }
+
+        //CPU se não estiver por uma jogada de ganhar ou de perder escolhe um posição valida
+        return cupJogaEmPosicaoValida(play, sinal);
+    }
+    public String cupJogaEmPosicaoValida(Play play, String sinal){
+
+        String[] posicoesRestantes = listaPosicoesDoTabuleiro(play, sinal);
+        int tamnaho = posicoesRestantes.length;
+        Random numberRandom = new Random();
+        int escolhaIntn;
+
+        do{
+            escolhaIntn = numberRandom.nextInt(tamnaho);
+        }while (posicoesRestantes[escolhaIntn].equals(" "));
+        return posicoesRestantes[escolhaIntn];
+    }
+
+    public String[] listaPosicoesDoTabuleiro(Play play, String sinal){
+
+        String sinalAdversario = sinal.equals("X") ? "O" : "X";
+        String[] posicoesRestantes = new String[10];
+        String[][] tabuleiroPosicaoValida =  play.getTabuleiro();
+        int contador = 1;
+
+        for (int i = 0; i < tabuleiroPosicaoValida.length; i++) {
+            for (int j = 0; j < tabuleiroPosicaoValida[i].length; j++) {
+                if(!tabuleiroPosicaoValida[i][j].equals(sinalAdversario) && !tabuleiroPosicaoValida[i][j].equals(sinal)){
+                    posicoesRestantes[contador] = i + "," + j;
+                }else{
+                    posicoesRestantes[contador] = " ";
+                }
+                contador++;
+            }
+        }
+
+        return posicoesRestantes;
+    }
 }
