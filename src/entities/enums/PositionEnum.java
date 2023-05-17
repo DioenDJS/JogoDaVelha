@@ -20,8 +20,14 @@ public enum PositionEnum {
         this.descricao = descricao;
     }
 
-    public String getId() {
-        return id;
+    public static String getId(String descricao) {
+        for (PositionEnum p : PositionEnum.values()) {
+            if(p.descricao.equals(descricao)){
+                return p.id;
+            }
+        }
+        return null;
+
     }
 
     public String getDescricao() {
