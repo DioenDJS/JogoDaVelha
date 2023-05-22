@@ -41,35 +41,6 @@ public class Play {
         setTabuleiro(this.tabuleiro);
     }
 
-
-    public StringBuilder getToString() {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < tabuleiro.length; i++) {
-            for (int j = 0; j < this.tabuleiro[i].length; j++) {
-                s.append("|" + this.tabuleiro[i][j]);
-            }
-            s.append("|\n");
-        }
-        return s;
-    }
-
-    public StringBuilder getViewPalyerWinner(String[] positionWinner) {
-        System.out.println(scoreboard.toString() + "\n");
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < tabuleiro.length; i++) {
-            for (int j = 0; j < this.tabuleiro[i].length; j++) {
-                String check = (i + "" + j);
-                if(check.equals(positionWinner[0]) || check.equals(positionWinner[1]) || check.equals(positionWinner[2]) ){
-                    s.append("|" + ConsoleColors.GREEN + this.tabuleiro[i][j] + ConsoleColors.RESET);
-                }else {
-                    s.append("|" + this.tabuleiro[i][j]);
-                }
-            }
-            s.append("|\n");
-        }
-        return s;
-    }
-
     public String getCheck(String sinal){
 
 
