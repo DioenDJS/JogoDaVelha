@@ -171,7 +171,7 @@ public class PlayService {
         int escolhaIntn;
 
         do{
-            escolhaIntn = numberRandom.nextInt(tamnaho);
+            escolhaIntn = numberRandom.ints(1, tamnaho ).findFirst().getAsInt();
         }while (posicoesRestantes[escolhaIntn].equals(" "));
         return posicoesRestantes[escolhaIntn];
     }
