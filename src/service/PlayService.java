@@ -3,6 +3,7 @@ package service;
 import entities.Play;
 import entities.Player;
 import entities.enums.PositionEnum;
+import utils.ConsoleColors;
 import utils.Messagens;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class PlayService {
         do {
              play.getInitTabuleiro();
 
-            System.out.println(play.getToString());
+            visualizandoTabuleiro(play, playerList);
 
             for (int i = 0; i < totalJogadas; i++) {
 
@@ -45,7 +46,7 @@ public class PlayService {
                     continue;
                 }
 
-                System.out.println(play.getToString());
+                visualizandoTabuleiro(play, playerList);
 
                 String returnSimboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
 
@@ -53,7 +54,9 @@ public class PlayService {
 
                 if(returnSimboloDoVencedor.equals("")&& i < 8){
                     continue;
-                }if(returnSimboloDoVencedor.equals("") && i == 8){
+                }
+
+                if(returnSimboloDoVencedor.equals("") && i == 8){
                     Messagens.resultadoDaPartida();
                     break;
                 } else if (simboloDoVencedor[3].equals("X") || simboloDoVencedor[3].equals("O")) {
@@ -68,7 +71,8 @@ public class PlayService {
                         play.getScoreboard().setPlayerTwo(play.getScoreboard().getPlayerTwo() + 1);
                     }
 
-                    System.out.println(play.getViewPalyerWinner(positionWinnewr));
+                    System.out.println(visualizarTabuleiroDoJogadorVencedor(play, playerList, positionWinnewr));
+                    System.out.println(play.getScoreboard().toString() + "\n");
                     break;
                 }
 
@@ -96,7 +100,6 @@ public class PlayService {
             return false;
         }else {
             play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
-            play.getTabuleiro();
             return true;
         }
     }
@@ -195,5 +198,48 @@ public class PlayService {
         }
 
         return posicoesRestantes;
+    }
+
+    public String[][] visualizandoTabuleiro(Play play, List<Player> players){
+
+        String[][] tabuleiroPosicaoValida =  play.getTabuleiro();
+
+        for (int i = 0; i < tabuleiroPosicaoValida.length; i++) {
+            for (int j = 0; j < tabuleiroPosicaoValida[i].length; j++) {
+                if(tabuleiroPosicaoValida[i][j].equals(players.get(0).getSimbolo())){
+                    System.out.print("|" + players.get(0).getColor() + tabuleiroPosicaoValida[i][j] + ConsoleColors.RESET);
+                }else if(tabuleiroPosicaoValida[i][j].equals(players.get(1).getSimbolo())){
+                    System.out.print("|" + players.get(1).getColor() + tabuleiroPosicaoValida[i][j] + ConsoleColors.RESET);
+                }else {
+                    System.out.print("|" + tabuleiroPosicaoValida[i][j]);
+                }
+            }
+            System.out.print("|\n");
+        }
+
+        return tabuleiroPosicaoValida;
+    }
+
+    public StringBuilder visualizarTabuleiroDoJogadorVencedor(Play play, List<Player> players, String[] positionWinner) {
+
+        String[][] tabuleiroPosicaoValida =  play.getTabuleiro();
+
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < tabuleiroPosicaoValida.length; i++) {
+            for (int j = 0; j < tabuleiroPosicaoValida[i].length; j++) {
+                String check = (i + "" + j);
+                if(check.equals(positionWinner[0]) || check.equals(positionWinner[1]) || check.equals(positionWinner[2]) ) {
+                    s.append("|" + ConsoleColors.GREEN + tabuleiroPosicaoValida[i][j] + ConsoleColors.RESET);
+                }else if(tabuleiroPosicaoValida[i][j].equals(players.get(0).getSimbolo())){
+                    s.append("|" + players.get(0).getColor() + tabuleiroPosicaoValida[i][j] + ConsoleColors.RESET);
+                }else if(tabuleiroPosicaoValida[i][j].equals(players.get(1).getSimbolo())) {
+                    s.append("|" + players.get(1).getColor() + tabuleiroPosicaoValida[i][j] + ConsoleColors.RESET);
+                }else {
+                    s.append("|" + tabuleiroPosicaoValida[i][j]);
+                }
+            }
+            s.append("|\n");
+        }
+        return s;
     }
 }
