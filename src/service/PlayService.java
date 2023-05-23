@@ -134,6 +134,8 @@ public class PlayService {
         }
     }
 
+    /* Escolhe uma posição para a CPU jogar primeiro validando se existe a posibilidade da CPU ganhar em alguma posição
+       ou se existe alguma posição de o adversario ganhar em caso de nao haver escolhe uma posição ainda disponivel  */
     public String getCheckDois(Play play, String sinal) {
 
         String sinalAdversario = sinal.equals("X") ? "O" : "X";
@@ -179,12 +181,13 @@ public class PlayService {
         return posicoesRestantes[escolhaIntn];
     }
 
+    /* Obtendo as posições ainda disponiveis no tabuleiro */
     public String[] listaPosicoesDoTabuleiro(Play play, String sinal){
 
         String sinalAdversario = sinal.equals("X") ? "O" : "X";
         String[] posicoesRestantes = new String[10];
         String[][] tabuleiroPosicaoValida =  play.getTabuleiro();
-        int contador = 1;
+        int contador = 1; //variavel que vai controlar a posição do vetor para add a posição dispónivel ou vazia do tabuleiro OBS: começa no 1 para ignorar a o 0 ja que as posição do tabuleiro no enum começam em 1
 
         for (int i = 0; i < tabuleiroPosicaoValida.length; i++) {
             for (int j = 0; j < tabuleiroPosicaoValida[i].length; j++) {
