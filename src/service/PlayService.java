@@ -218,7 +218,7 @@ public class PlayService {
     }
 
     public String[][] visualizandoTabuleiro(Play play, List<Player> players){
-
+        System.out.println(play.getScoreboard().toString());
         String[][] tabuleiroPosicaoValida =  play.getTabuleiro();
 
         for (int i = 0; i < tabuleiroPosicaoValida.length; i++) {
