@@ -20,10 +20,10 @@ public class PlayService {
         do {
              play.getInitTabuleiro();
 
-            visualizandoTabuleiro(play, playerList);
+//            visualizandoTabuleiro(play, playerList);
 
             for (int i = 0; i < totalJogadas; i++) {
-
+                visualizandoTabuleiro(play, playerList);
                 int vezDoJogador = (i + 1) % 2 == 0 ? 1 : 0;
 
                 String escolha;
@@ -53,10 +53,9 @@ public class PlayService {
                     continue;
                 }
                 ClearConsole.ClearConsole();
+//                visualizandoTabuleiro(play, playerList);
 
-                visualizandoTabuleiro(play, playerList);
-
-                String returnSimboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
+                String returnSimboloDoVencedor = getCheck(play, playerList.get(vezDoJogador).getSimbolo());
 
                 String[] simboloDoVencedor = returnSimboloDoVencedor.split(",");
 
@@ -90,7 +89,7 @@ public class PlayService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-           replayGame = jogarNovamente(input);
+            replayGame = jogarNovamente(input);
 
         }while (replayGame);
     }
@@ -161,7 +160,7 @@ public class PlayService {
             if(posiçõesRestantes[i].equals(" ")){
                 continue;
             }
-            String e =  play.cpuChecaPosicaoVitoriaOuDerrota(PositionEnum.getDescricao(String.valueOf(i)), sinal);
+            String e =  cpuChecaPosicaoVitoriaOuDerrota(play, PositionEnum.getDescricao(String.valueOf(i)), sinal);
             if(!e.isEmpty()){
                 return e;
             }
@@ -173,7 +172,7 @@ public class PlayService {
             if(posiçõesRestantes[i].equals(" ")){
                 continue;
             }
-           String e =  play.cpuChecaPosicaoVitoriaOuDerrota(PositionEnum.getDescricao(String.valueOf(i)), sinalAdversario);
+           String e =  cpuChecaPosicaoVitoriaOuDerrota(play, PositionEnum.getDescricao(String.valueOf(i)), sinalAdversario);
            if(!e.isEmpty()){
                return e;
            }
