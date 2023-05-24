@@ -287,4 +287,31 @@ public class PlayService {
         }
         return "";
     }
+
+    //recebe a posição pra ser checada e o sinal
+    public String cpuChecaPosicaoVitoriaOuDerrota(Play play, String positionWinner, String sinal) {
+
+        String[][] tabuleiro =  play.getTabuleiro();
+
+        //separa o valor na virgula
+        String[] positions = positionWinner.split(",");
+
+        //preserva o valor que havia na posição a ser checada
+        String guardaValor = tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
+
+        //seta o valor para validar
+        play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
+
+        //checando se o adiversirio vence
+        String existe = getCheck(play, sinal);
+
+        //retorna valor pra posição
+        play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), guardaValor);
+
+        if(existe.isEmpty()){
+            return "";
+        }
+
+        return positionWinner;
+    }
 }
