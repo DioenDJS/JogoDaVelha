@@ -3,12 +3,14 @@ package service;
 import entities.Play;
 import entities.Player;
 import entities.enums.PositionEnum;
+import utils.ClearConsole;
 import utils.ConsoleColors;
 import utils.Messagens;
 
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class PlayService {
 
@@ -18,10 +20,10 @@ public class PlayService {
         do {
              play.getInitTabuleiro();
 
-            visualizandoTabuleiro(play, playerList);
+//            visualizandoTabuleiro(play, playerList);
 
             for (int i = 0; i < totalJogadas; i++) {
-
+                visualizandoTabuleiro(play, playerList);
                 int vezDoJogador = (i + 1) % 2 == 0 ? 1 : 0;
 
                 String escolha;
@@ -39,16 +41,21 @@ public class PlayService {
                         throw new NumberFormatException(e.getMessage());
                     }
                     Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName(), Integer.parseInt(escolha));
+                    try {
+                        TimeUnit.SECONDS.sleep(1L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 if(!jogar(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
                     i--;
                     continue;
                 }
+                ClearConsole.ClearConsole();
+//                visualizandoTabuleiro(play, playerList);
 
-                visualizandoTabuleiro(play, playerList);
-
-                String returnSimboloDoVencedor = play.getCheck(playerList.get(vezDoJogador).getSimbolo());
+                String returnSimboloDoVencedor = getCheck(play, playerList.get(vezDoJogador).getSimbolo());
 
                 String[] simboloDoVencedor = returnSimboloDoVencedor.split(",");
 
@@ -77,8 +84,12 @@ public class PlayService {
                 }
 
             }
-
-           replayGame = jogarNovamente(input);
+            try {
+                TimeUnit.SECONDS.sleep(4L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            replayGame = jogarNovamente(input);
 
         }while (replayGame);
     }
@@ -115,6 +126,7 @@ public class PlayService {
     }
 
     public boolean jogarNovamente(Scanner input){
+        ClearConsole.ClearConsole();
         char letter;
         do {
             Messagens.jogarNovamente();
@@ -127,6 +139,7 @@ public class PlayService {
             }
         }while(letter == ' ');
 
+        ClearConsole.ClearConsole();
         if (letter == 'S' || letter == 's') {
             return true;
         } else{
@@ -147,7 +160,7 @@ public class PlayService {
             if(posiçõesRestantes[i].equals(" ")){
                 continue;
             }
-            String e =  play.cpuChecaPosicaoVitoriaOuDerrota(PositionEnum.getDescricao(String.valueOf(i)), sinal);
+            String e =  cpuChecaPosicaoVitoriaOuDerrota(play, PositionEnum.getDescricao(String.valueOf(i)), sinal);
             if(!e.isEmpty()){
                 return e;
             }
@@ -159,7 +172,7 @@ public class PlayService {
             if(posiçõesRestantes[i].equals(" ")){
                 continue;
             }
-           String e =  play.cpuChecaPosicaoVitoriaOuDerrota(PositionEnum.getDescricao(String.valueOf(i)), sinalAdversario);
+           String e =  cpuChecaPosicaoVitoriaOuDerrota(play, PositionEnum.getDescricao(String.valueOf(i)), sinalAdversario);
            if(!e.isEmpty()){
                return e;
            }
@@ -204,7 +217,7 @@ public class PlayService {
     }
 
     public String[][] visualizandoTabuleiro(Play play, List<Player> players){
-
+        System.out.println(play.getScoreboard().toString());
         String[][] tabuleiroPosicaoValida =  play.getTabuleiro();
 
         for (int i = 0; i < tabuleiroPosicaoValida.length; i++) {
@@ -244,5 +257,70 @@ public class PlayService {
             s.append("|\n");
         }
         return s;
+    }
+
+    public String getCheck(Play play, String sinal){
+
+
+        String[][] tabuleiro =  play.getTabuleiro();
+
+        if((tabuleiro[0][0].equals(sinal) && tabuleiro[0][1].equals(sinal) && tabuleiro[0][2].equals(sinal))){
+            return  "00,01,02," + sinal;
+        }
+
+        if((tabuleiro[1][0].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[1][2].equals(sinal))){
+            return  "10,11,12," + sinal;
+        }
+
+        if((tabuleiro[2][0].equals(sinal) && tabuleiro[2][1].equals(sinal) && tabuleiro[2][2].equals(sinal))){
+            return  "20,21,22," + sinal;
+        }
+
+        if((tabuleiro[0][0].equals(sinal) && tabuleiro[1][0].equals(sinal) && tabuleiro[2][0].equals(sinal))){
+            return "00,10,20," + sinal;
+        }
+
+        if((tabuleiro[0][1].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[2][1].equals(sinal))){
+            return "01,11,21," + sinal;
+        }
+
+        if((tabuleiro[0][2].equals(sinal) && tabuleiro[1][2].equals(sinal) && tabuleiro[2][2].equals(sinal))){
+            return "02,12,22," + sinal;
+        }
+
+        if((tabuleiro[0][0].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[2][2].equals(sinal))){
+            return "00,11,22," + sinal;
+        }
+        if((tabuleiro[0][2].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[2][0].equals(sinal))){
+            return "02,11,20," + sinal;
+        }
+        return "";
+    }
+
+    //recebe a posição pra ser checada e o sinal
+    public String cpuChecaPosicaoVitoriaOuDerrota(Play play, String positionWinner, String sinal) {
+
+        String[][] tabuleiro =  play.getTabuleiro();
+
+        //separa o valor na virgula
+        String[] positions = positionWinner.split(",");
+
+        //preserva o valor que havia na posição a ser checada
+        String guardaValor = tabuleiro[Integer.parseInt(positions[0])][Integer.parseInt(positions[1])];
+
+        //seta o valor para validar
+        play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), sinal);
+
+        //checando se o adiversirio vence
+        String existe = getCheck(play, sinal);
+
+        //retorna valor pra posição
+        play.setValueBoard(Integer.parseInt(positions[0]),Integer.parseInt(positions[1]), guardaValor);
+
+        if(existe.isEmpty()){
+            return "";
+        }
+
+        return positionWinner;
     }
 }

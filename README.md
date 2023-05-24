@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-    <img alt="GitHub repo size" src="https://user-images.githubusercontent.com/76778401/235329586-9041ca5b-11f5-42a8-a85e-764954293db0.png" >
+    <img alt="GitHub repo size" src="assets/project.gif" >
 </p>
 
 ## Projeto :computer:
