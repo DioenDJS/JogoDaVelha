@@ -10,6 +10,7 @@ import utils.Messagens;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class PlayService {
 
@@ -40,6 +41,11 @@ public class PlayService {
                         throw new NumberFormatException(e.getMessage());
                     }
                     Messagens.escolhorPosição(playerList.get(vezDoJogador).getColor() + (vezDoJogador + 1), playerList.get(vezDoJogador).getName(), Integer.parseInt(escolha));
+                    try {
+                        TimeUnit.SECONDS.sleep(1L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 if(!jogar(play, escolha, playerList.get(vezDoJogador).getSimbolo(), cpu)) {
@@ -79,7 +85,11 @@ public class PlayService {
                 }
 
             }
-
+            try {
+                TimeUnit.SECONDS.sleep(4L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
            replayGame = jogarNovamente(input);
 
         }while (replayGame);
