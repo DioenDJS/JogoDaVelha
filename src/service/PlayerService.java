@@ -1,6 +1,7 @@
 package service;
 
 import entities.Player;
+import utils.ClearConsole;
 import utils.ConsoleColors;
 import utils.Messagens;
 
@@ -16,6 +17,7 @@ public class PlayerService {
 
         boolean cpu = switchPlay == 1 ? true : false ;
 
+        ClearConsole.ClearConsole();
         return cadastraJogadores(playerList, input, cpu);
 
     }
@@ -53,6 +55,7 @@ public class PlayerService {
 
                     playerList.add(new Player(name, simbolo, colorPlayer));
                 }
+                ClearConsole.ClearConsole();
                 return playerList;
 
             } catch (NullPointerException e) {
