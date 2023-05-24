@@ -249,4 +249,42 @@ public class PlayService {
         }
         return s;
     }
+
+    public String getCheck(Play play, String sinal){
+
+
+        String[][] tabuleiro =  play.getTabuleiro();
+
+        if((tabuleiro[0][0].equals(sinal) && tabuleiro[0][1].equals(sinal) && tabuleiro[0][2].equals(sinal))){
+            return  "00,01,02," + sinal;
+        }
+
+        if((tabuleiro[1][0].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[1][2].equals(sinal))){
+            return  "10,11,12," + sinal;
+        }
+
+        if((tabuleiro[2][0].equals(sinal) && tabuleiro[2][1].equals(sinal) && tabuleiro[2][2].equals(sinal))){
+            return  "20,21,22," + sinal;
+        }
+
+        if((tabuleiro[0][0].equals(sinal) && tabuleiro[1][0].equals(sinal) && tabuleiro[2][0].equals(sinal))){
+            return "00,10,20," + sinal;
+        }
+
+        if((tabuleiro[0][1].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[2][1].equals(sinal))){
+            return "01,11,21," + sinal;
+        }
+
+        if((tabuleiro[0][2].equals(sinal) && tabuleiro[1][2].equals(sinal) && tabuleiro[2][2].equals(sinal))){
+            return "02,12,22," + sinal;
+        }
+
+        if((tabuleiro[0][0].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[2][2].equals(sinal))){
+            return "00,11,22," + sinal;
+        }
+        if((tabuleiro[0][2].equals(sinal) && tabuleiro[1][1].equals(sinal) && tabuleiro[2][0].equals(sinal))){
+            return "02,11,20," + sinal;
+        }
+        return "";
+    }
 }
