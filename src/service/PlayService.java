@@ -3,6 +3,7 @@ package service;
 import entities.Play;
 import entities.Player;
 import entities.enums.PositionEnum;
+import utils.ClearConsole;
 import utils.ConsoleColors;
 import utils.Messagens;
 
@@ -45,6 +46,7 @@ public class PlayService {
                     i--;
                     continue;
                 }
+                ClearConsole.ClearConsole();
 
                 visualizandoTabuleiro(play, playerList);
 
@@ -115,6 +117,7 @@ public class PlayService {
     }
 
     public boolean jogarNovamente(Scanner input){
+        ClearConsole.ClearConsole();
         char letter;
         do {
             Messagens.jogarNovamente();
@@ -127,6 +130,7 @@ public class PlayService {
             }
         }while(letter == ' ');
 
+        ClearConsole.ClearConsole();
         if (letter == 'S' || letter == 's') {
             return true;
         } else{
